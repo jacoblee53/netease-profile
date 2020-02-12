@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "react-app",
+    "airbnb",
+    "plugin:jsx-a11y/recommended",
+    "prettier",
+    "baseui",
+    "prettier/react"
+  ],
+  "parser": "babel-eslint",
+  "plugins": ["jsx-a11y", "prettier"],
+  "rules": {
+    "baseui/deprecated-theme-api": "warn",
+    "baseui/deprecated-component-api": "warn",
+    "baseui/no-deep-imports": "warn",
+    "semi": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": false
+      }
+    ]
+  }
+}
