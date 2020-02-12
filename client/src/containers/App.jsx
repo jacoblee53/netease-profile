@@ -5,6 +5,7 @@ import { DarkTheme, BaseProvider } from "baseui";
 import { GlobalStyle } from "../styles";
 import styled from "styled-components/macro";
 import Profile from "./Profile";
+import Login from "./Login";
 
 const AppContainer = styled.div`
   height: 100%;
