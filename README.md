@@ -4,8 +4,22 @@
 
 Built with a bunch of things, but to name a few:
 
-- baseweb
 - NeteaseCloudMusicApi
 - Styled Component
+- @reach/router
 
-# Setup
+# Deploy
+
+1. Create new heroku app
+
+  ```bash
+    herou create netease-profile
+  ```
+
+2. Push to heroku
+
+  ```bash
+    git push heroku master
+  ```
+
+3. Once the app is live on Heroku, hitting https://netease-profile.herokuapp.com/

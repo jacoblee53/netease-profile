@@ -11,7 +11,7 @@ const TracksContainer = styled.ul`
 
 function Recent() {
   const [recentlyPlayed, setRecentPlayed] = useState(null);
-
+  
   useEffect(() => {
     getRecentlyPlayed(1).then(res => setRecentPlayed(res));
   }, []);
