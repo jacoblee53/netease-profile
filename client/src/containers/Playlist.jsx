@@ -58,7 +58,7 @@ const Description = styled.p`
   }
 `;
 const RecButton = styled(Link)`
-  ${mixins.greenButton};
+  ${mixins.redButton};
   margin-bottom: ${spacing.lg};
 `;
 const Owner = styled.p`
@@ -71,20 +71,49 @@ const TotalTracks = styled.p`
   margin-top: 20px;
 `;
 
-function Playlist() {
+function Playlist(props) {
   const [playlist, setPlaylist] = useState(null);
 
   useEffect(() => {
-    getPlaylist();
-  }, [])
+    const { playlistId } = props;
+    getPlaylist(playlistId).then(res => setPlaylist(res));
+  }, [props]);
 
   return (
     <React.Fragment>
       {playlist ? (
         <Main>
           <PlaylistContainer>
-            <Left></Left>
-            <Right></Right>
+            <Left>
+              <PlaylistCover>
+                <img src={playlist.coverImgUrl} alt="Album Art" />
+              </PlaylistCover>
+
+              <a href={`https://music.163.com/#/playlist?id=${playlist.id}`} target="_blank" rel="noopener noreferrer">
+                <Name>{playlist.name}</Name>
+              </a>
+
+              <Owner>By {playlist.creator.nickname}</Owner>
+
+              {playlist.description && (
+                <Description
+                  dangerouslySetInnerHTML={{ __html: playlist.description }}
+                />
+              )}
+
+              <TotalTracks>{playlist.trackCount} Tracks</TotalTracks>
+
+              <RecButton to={`/recommendations/${playlist.id}`}  state={{ playlist}}>
+                Get Recommendations
+              </RecButton>
+            </Left>
+            <Right>
+              <ul>
+                {playlist.tracks.map((track, i) => (
+                  <TrackItem track={{ song: track, playCount: 0 }} key={i} />
+                ))}
+              </ul>
+            </Right>
           </PlaylistContainer>
         </Main>
       ) : (

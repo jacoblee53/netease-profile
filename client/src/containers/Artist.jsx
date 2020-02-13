@@ -49,9 +49,6 @@ const Number = styled.div`
     font-size: ${fontSizes.md};
   `};
 `;
-const Genre = styled.div`
-  font-size: ${fontSizes.md};
-`;
 const NumLabel = styled.p`
   color: ${colors.lightGrey};
   font-size: ${fontSizes.xs};
@@ -77,13 +74,13 @@ const FollowButton = styled.button`
 
 function Artist(props) {
   const [artist, setArtist] = useState(null);
-  const [isFollowing, setIsFollowing] = useState(true);
+  const [isFollowing] = useState(true);
 
   useEffect(() => {
     const { artist } = props.location.state;
     artist && setArtist(artist);
     console.log(artist);
-  }, []);
+  }, [props.location.state]);
 
   return (
     <React.Fragment>

@@ -76,7 +76,8 @@ const TrackDuration = styled.span`
 `;
 
 const TrackItem = ({ track, type }) => {
-  const { playCount, song } = track;
+  const { song } = track;
+  const playCount = track.playCount || 0;
   return (
     <li>
       <TrackContainer to={`/track/${song.id}`}>

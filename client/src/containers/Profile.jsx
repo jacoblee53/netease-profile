@@ -10,6 +10,8 @@ import Recent from "./Recent";
 import Playlists from "./Playlists";
 import Artist from "./Artist";
 import Playlist from "./Playlist";
+import Track from "./Track";
+import Recommendations from "./Recommendations.jsx";
 
 const SiteWrapper = styled.div`
   padding-left: ${theme.navWidth};
@@ -30,6 +32,8 @@ function Profile() {
         <Recent path="recent" />
         <Playlists path="playlists" />
         <Playlist path="playlists/:playlistId" />
+        <Track path="track/:trackId" />
+        <Recommendations path="recommendations/:playlistId" />
         <Artist path="artist/:artistId" />
       </Router>
     </SiteWrapper>
