@@ -77,7 +77,7 @@ function Login() {
           value={phone}
           onChange={e => setPhone(e.target.value)}
           size={SIZE.default}
-          placeholder="Phone"
+          placeholder="Phone or mail"
           clearable
         />
         <Input

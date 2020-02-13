@@ -1,10 +1,289 @@
-import React from 'react';
-import { Main } from '../styles';
+import React, { useState, useEffect } from "react";
+import { Link } from "@reach/router";
+import {
+  getUserInfo,
+  logout,
+  getRecentlyPlayed,
+  getLikeArtists
+} from "../netease";
+
+import { IconUser, IconInfo } from "../assets/icons";
+import Loader from "../components/Loader";
+import TrackItem from "./TrackItem";
+
+import styled from "styled-components/macro";
+import { theme, mixins, media, Main } from "../styles";
+const { colors, fontSizes, spacing } = theme;
+
+const Header = styled.header`
+  ${mixins.flexCenter};
+  flex-direction: column;
+  position: relative;
+`;
+const Avatar = styled.div`
+  width: 150px;
+  height: 150px;
+  img {
+    border-radius: 100%;
+  }
+`;
+const NoAvatar = styled.div`
+  border: 2px solid currentColor;
+  border-radius: 100%;
+  padding: ${spacing.md};
+`;
+const UserName = styled.a`
+  &:hover,
+  &:focus {
+    color: ${colors.offRed};
+  }
+`;
+const Name = styled.h1`
+  font-size: 50px;
+  font-weight: 700;
+  margin: 20px 0 0;
+  ${media.tablet`
+    font-size: 40px;
+  `};
+  ${media.phablet`
+    font-size: 8vw;
+  `};
+`;
+const Stats = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+  margin-top: ${spacing.base};
+`;
+const Stat = styled.div`
+  text-align: center;
+`;
+const Number = styled.div`
+  color: ${colors.red};
+  font-weight: 700;
+  font-size: ${fontSizes.md};
+`;
+const NumLabel = styled.p`
+  color: ${colors.lightGrey};
+  font-size: ${fontSizes.xs};
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: ${spacing.xs};
+`;
+const LogoutButton = styled.a`
+  background-color: transparent;
+  color: ${colors.white};
+  border: 1px solid ${colors.white};
+  border-radius: 30px;
+  margin-top: 30px;
+  padding: 12px 30px;
+  font-size: ${fontSizes.xs};
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  &:hover,
+  &:focus {
+    background-color: ${colors.white};
+    color: ${colors.black};
+  }
+`;
+const Preview = styled.section`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 70px;
+  width: 100%;
+  margin-top: 100px;
+  ${media.tablet`
+    display: block;
+    margin-top: 70px;
+  `};
+`;
+const Tracklist = styled.div`
+  ${media.tablet`
+    &:last-of-type {
+      margin-top: 50px;
+    }
+  `};
+`;
+const TracklistHeading = styled.div`
+  ${mixins.flexBetween};
+  margin-bottom: 40px;
+  h3 {
+    display: inline-block;
+    margin: 0;
+  }
+`;
+const MoreButton = styled(Link)`
+  ${mixins.button};
+  text-align: center;
+  white-space: nowrap;
+  ${media.phablet`
+    padding: 11px 20px;
+    font-sizes: ${fontSizes.xs};
+  `};
+`;
+const Mask = styled.div`
+  ${mixins.flexCenter};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: ${colors.white};
+  opacity: 0;
+  transition: ${theme.transition};
+  svg {
+    width: 25px;
+  }
+`;
+const Artist = styled.li`
+  display: flex;
+  align-items: center;
+  margin-bottom: ${spacing.md};
+  ${media.tablet`
+    margin-bottom: ${spacing.base};
+  `};
+  &:hover,
+  &:focus {
+    ${Mask} {
+      opacity: 1;
+    }
+  }
+`;
+const ArtistArtwork = styled(Link)`
+  display: inline-block;
+  position: relative;
+  width: 50px;
+  min-width: 50px;
+  margin-right: ${spacing.base};
+  img {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    margin-right: ${spacing.base};
+    border-radius: 100%;
+  }
+`;
+
+const ArtistName = styled(Link)`
+  flex-grow: 1;
+  span {
+    border-bottom: 1px solid transparent;
+    &:hover,
+    &:focus {
+      border-bottom: 1px solid ${colors.white};
+    }
+  }
+`;
 
 function User() {
+  const [user, setUser] = useState(null);
+  const [topTracks, setTopTracks] = useState(null);
+  const [likeArtists, setLikeArtists] = useState(null);
+
+  useEffect(() => {
+    getUserInfo().then(res => setUser(res));
+    getLikeArtists().then(res => setLikeArtists(res));
+    getRecentlyPlayed(0).then(res => setTopTracks(res));
+  }, []);
+
   return (
     <React.Fragment>
-      <Main>USER</Main>
+      {user && user.profile ? (
+        <Main>
+          <Header>
+            <Avatar>
+              {user.profile.avatarUrl ? (
+                <img src={user.profile.avatarUrl} alt="avatar" />
+              ) : (
+                <NoAvatar>
+                  <IconUser />
+                </NoAvatar>
+              )}
+            </Avatar>
+            <UserName
+              href={`https://music.163.com/#/user/home?id=${user.profile.userId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Name>{user.profile.nickname}</Name>
+            </UserName>
+            <Stats>
+              <Stat>
+                <Number>{user.profile.followeds}</Number>
+                <NumLabel>Followers</NumLabel>
+              </Stat>
+
+              <Stat>
+                <Number>{user.profile.follows}</Number>
+                <NumLabel>Following</NumLabel>
+              </Stat>
+
+              <Stat>
+                <Link to="playlists">
+                  <Number>{user.profile.playlistCount}</Number>
+                  <NumLabel>Playlists</NumLabel>
+                </Link>
+              </Stat>
+            </Stats>
+            <LogoutButton onClick={logout}>Logout</LogoutButton>
+          </Header>
+
+          <Preview>
+            <Tracklist>
+              <TracklistHeading>
+                <h3>Like Artists of All Time</h3>
+                <MoreButton to="/artists">See More</MoreButton>
+              </TracklistHeading>
+              <div>
+                {likeArtists ? (
+                  <ul>
+                    {likeArtists.slice(0, 10).map(({ id, picUrl, name }, i) => (
+                      <Artist key={i}>
+                        <ArtistArtwork to={`/artist/${id}`}>
+                          {picUrl && <img src={picUrl} alt="Artist" />}
+                          <Mask>
+                            <IconInfo />
+                          </Mask>
+                        </ArtistArtwork>
+                        <ArtistName to={`/artist/${id}`}>
+                          <span>{name}</span>
+                        </ArtistName>
+                      </Artist>
+                    ))}
+                  </ul>
+                ) : (
+                  <Loader />
+                )}
+              </div>
+            </Tracklist>
+
+            <Tracklist>
+              <TracklistHeading>
+                <h3>Top Tracks of All Time</h3>
+                <MoreButton to="/tracks">See More</MoreButton>
+              </TracklistHeading>
+              <ul>
+                {topTracks ? (
+                  topTracks
+                    .slice(0, 10)
+                    .map((track, i) => (
+                      <TrackItem track={track} type={"top"} key={i} />
+                    ))
+                ) : (
+                  <Loader />
+                )}
+              </ul>
+            </Tracklist>
+          </Preview>
+        </Main>
+      ) : (
+        <Loader />
+      )}
     </React.Fragment>
   );
 }

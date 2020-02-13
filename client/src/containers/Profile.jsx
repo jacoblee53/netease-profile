@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components/macro";
 import { Router } from "@reach/router";
 import { theme, media } from "../styles";
+import Nav from "../components/Nav";
 import User from "./User";
 import LikeArtists from "./LikeArtists";
-import LikeTracks from "./LikeTracks";
+import TopTracks from "./TopTracks";
 import Recent from "./Recent";
 import Playlists from "./Playlists";
-import Nav from "../components/Nav";
+import Artist from "./Artist";
+import Playlist from "./Playlist";
 
 const SiteWrapper = styled.div`
   padding-left: ${theme.navWidth};
@@ -24,9 +26,11 @@ function Profile() {
       <Router primary={false}>
         <User path="/" />
         <LikeArtists path="artists" />
-        <LikeTracks path="tracks" />
+        <TopTracks path="tracks" />
         <Recent path="recent" />
         <Playlists path="playlists" />
+        <Playlist path="playlists/:playlistId" />
+        <Artist path="artist/:artistId" />
       </Router>
     </SiteWrapper>
   );

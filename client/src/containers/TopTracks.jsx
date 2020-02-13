@@ -9,20 +9,20 @@ const TracksContainer = styled.ul`
   margin-top: 50px;
 `;
 
-function Recent() {
-  const [recentlyPlayed, setRecentPlayed] = useState(null);
+function TopTracks() {
+  const [topTracks, setTopTracks] = useState(null);
 
   useEffect(() => {
-    getRecentlyPlayed(1).then(res => setRecentPlayed(res));
+    getRecentlyPlayed(0).then(res => setTopTracks(res));
   }, []);
 
   return (
     <Main>
-      <h2>Recently Played Tracks</h2>
+      <h2>Top Tracks</h2>
       <TracksContainer>
-        {recentlyPlayed ? (
-          recentlyPlayed.map((track, idx) => (
-            <TrackItem key={idx} track={track} />
+        {topTracks ? (
+          topTracks.map((track, idx) => (
+            <TrackItem key={idx} track={track} type={'top'}/>
           ))
         ) : (
           <Loader />
@@ -32,4 +32,4 @@ function Recent() {
   );
 }
 
-export default Recent;
+export default TopTracks;

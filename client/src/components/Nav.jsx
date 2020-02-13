@@ -155,7 +155,7 @@ const Nav = () => (
       <MenuItem>
         <NavLink to="tracks">
           <IconMusic />
-          <div>Like Tracks</div>
+          <div>Top Tracks</div>
         </NavLink>
       </MenuItem>
       <MenuItem>
