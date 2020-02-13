@@ -2,11 +2,18 @@
 
 > A web app for visualizing personalized NeteaseMusic data
 
+<img src="./prototype.png" width="80%"/>
+
 Built with a bunch of things, but to name a few:
 
 - NeteaseCloudMusicApi
 - Styled Component
 - @reach/router
+
+# Setup
+
+1. `yarn && yarn client:install`
+2. `yarn dev`
 
 # Deploy
 

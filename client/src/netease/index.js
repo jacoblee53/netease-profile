@@ -2,7 +2,10 @@ import axios from "axios";
 import { isEmail } from "../utils";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3001/",
+  baseURL:
+    process.env.NODE_ENV !== "production"
+      ? "http://localhost:3001/"
+      : "https://netease-profile-api.herokuapp.com/",
   withCredentials: true
 });
 

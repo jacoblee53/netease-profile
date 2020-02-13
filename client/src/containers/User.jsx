@@ -169,7 +169,7 @@ const ArtistArtwork = styled(Link)`
   }
 `;
 
-const ArtistName = styled(Link)`
+const ArtistName = styled.a`
   flex-grow: 1;
   span {
     border-bottom: 1px solid transparent;
@@ -242,19 +242,29 @@ function User() {
               <div>
                 {likeArtists ? (
                   <ul>
-                    {likeArtists.slice(0, 10).map(({ id, picUrl, name }, i) => (
-                      <Artist key={i}>
-                        <ArtistArtwork to={`/artist/${id}`}>
-                          {picUrl && <img src={picUrl} alt="Artist" />}
-                          <Mask>
-                            <IconInfo />
-                          </Mask>
-                        </ArtistArtwork>
-                        <ArtistName to={`/artist/${id}`}>
-                          <span>{name}</span>
-                        </ArtistName>
-                      </Artist>
-                    ))}
+                    {likeArtists.slice(0, 10).map((artist, i) => {
+                      const { id, picUrl, name } = artist;
+                      return (
+                        <Artist key={i}>
+                          <ArtistArtwork
+                            to={`/artist/${id}`}
+                            state={{ artist }}
+                          >
+                            {picUrl && <img src={picUrl} alt="Artist" />}
+                            <Mask>
+                              <IconInfo />
+                            </Mask>
+                          </ArtistArtwork>
+                          <ArtistName
+                            href={`https://music.163.com/#/artist?id=${id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <span>{name}</span>
+                          </ArtistName>
+                        </Artist>
+                      );
+                    })}
                   </ul>
                 ) : (
                   <Loader />

@@ -8,8 +8,8 @@
     "client": "cd client && yarn start",
     "server": "cd server && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "start": "PORT=8080 node server/app.js",
-    "heroku-postbuild": "cd client/ && yarn && yarn build && cd .. && cd server/ && yarn"
+    "start": "node server.js",
+    "heroku-postbuild": "cd client/ && yarn && yarn build"
   },
   "repository": {
     "type": "git",
