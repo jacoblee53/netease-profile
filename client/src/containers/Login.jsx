@@ -101,8 +101,8 @@ function Login() {
       </LoginFormContainer>
       <LoginButton
         onClick={() => {
-          if(phone && password) {
-            login({phone, password});
+          if (phone && password) {
+            login({ phone, password });
           }
         }}
       >

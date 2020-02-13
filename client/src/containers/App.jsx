@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Client as Styletron } from "styletron-engine-atomic";
 import { Provider as StyletronProvider } from "styletron-react";
 import { DarkTheme, BaseProvider } from "baseui";
@@ -15,12 +15,19 @@ const AppContainer = styled.div`
 const engine = new Styletron();
 
 function App() {
+  const [uid, setUid] = useState(null);
+
+  useEffect(() => {
+    const uid = window.localStorage.getItem("netease_uid");
+    setUid(uid);
+  }, []);
+
   return (
     <StyletronProvider value={engine}>
       <BaseProvider theme={DarkTheme}>
         <AppContainer>
           <GlobalStyle />
-          <Profile />
+          {uid ? <Profile /> : <Login />}
         </AppContainer>
       </BaseProvider>
     </StyletronProvider>
