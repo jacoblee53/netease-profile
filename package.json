@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client:install": "cd client && yarn",
+    "client": "cd client && yarn start",
+    "server": "cd server && yarn start",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "start": "\"node www\"",
+    "heroku-postbuild": "yarn && cd client/ && yarn && yarn build && cd .. && cd server/ && yarn"
   },
   "repository": {
     "type": "git",
@@ -16,5 +21,12 @@
   "bugs": {
     "url": "https://github.com/oddisland/netease-profile/issues"
   },
-  "homepage": "https://github.com/oddisland/netease-profile#readme"
+  "homepage": "https://github.com/oddisland/netease-profile#readme",
+  "dependencies": {
+    "concurrently": "^5.1.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
 }
