@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "client:install": "cd client && yarn",
+    "server:instsall": "cd server && yarn",
     "client": "cd client && yarn start",
     "server": "cd server && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "start": "node server.js",
-    "heroku-postbuild": "cd client/ && yarn && yarn build"
+    "heroku-postbuild": "cd client/ && yarn && yarn build",
+    "test": "cd client && yarn test"
   },
   "repository": {
     "type": "git",

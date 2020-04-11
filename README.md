@@ -2,18 +2,25 @@
 
 > A web app for visualizing personalized NeteaseMusic data
 
-<img src="./prototype.png" width="80%"/>
+<img src="./prototype.png" width="70%"/>
 
 Built with a bunch of things, but to name a few:
 
 - NeteaseCloudMusicApi
 - Styled Component
 - @reach/router
+- Storybook v5.3
 
 # Setup
 
-1. `yarn && yarn client:install`
-2. `yarn dev`
+1. `git submodule update --init --recursive`
+2. `yarn && yarn client:install && yarn server:install`
+3. `yarn dev`
+
+# Test
+
+- `cd client && yarn storybook`
+- `yarn test`
 
 # Deploy
 
